@@ -40,14 +40,31 @@ export default {
         const url = new URL(request.url);
         const path = url.pathname.split(/\//);
 
-        if (!path[1].trim()) return new Response(JSON.stringify({ message: "Missing ROBLOX subdomain." }), { status: 400 });
+        // Check for missing subdomain
+        if (!path[1].trim()) {
+            return new Response(JSON.stringify({ message: "Missing ROBLOX subdomain." }), { status: 400 });
+        }
 
-        if (!domains.includes(path[1])) return new Response(JSON.stringify({ message: "Specified subdomain is not allowed." }), { status: 401 });
-        
-        return fetch(`https://${path[1]}.roblox.com/${path.slice(2).join("/")}${url.search}`, {
+        // Check if the subdomain is allowed
+        if (!domains.includes(path[1])) {
+            return new Response(JSON.stringify({ message: "Specified subdomain is not allowed." }), { status: 401 });
+        }
+
+        // Fetch the resource from the specified subdomain
+        const response = await fetch(`https://${path[1]}.roblox.com/${path.slice(2).join("/")}${url.search}`, {
             method: request.method,
             headers: request.headers["content-type"] ? { "Content-Type": request.headers["content-type"] } : {},
             body: request.body
         });
+
+        // Create a new response object to add CORS headers
+        const newResponse = new Response(response.body, response);
+
+        // Set CORS headers
+        newResponse.headers.set('Access-Control-Allow-Origin', '*'); // Replace '*' with specific origins if needed
+        newResponse.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Add other methods if required
+        newResponse.headers.set('Access-Control-Allow-Headers', '*'); // Specify headers if needed
+
+        return newResponse;
     }
 }
