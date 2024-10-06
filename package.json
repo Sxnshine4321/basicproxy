@@ -1,0 +1,11 @@
+{
+    "name": "basicproxy",
+    "description": "A basic Roblox proxy for use on Cloudflare Workers.",
+    "version": "1.0.0",
+    "author": "pyxfluff <business@notpyx.me> iiPython <ben@iipython.dev>",
+    "scripts": {
+        "run": "node index.js",
+        "deploy": "wrangler deploy"
+    },
+    "keywords": []
+}
