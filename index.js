@@ -1,7 +1,5 @@
 // Copyright (c) 2024 iiPython
 
-// List of domains
-// Would of preferred to use JSON, but CF doesn't allow `require("fs")`
 const domains = [
     "apis",
     "assetdelivery",
@@ -32,13 +30,27 @@ const domains = [
     "trades",
     "translations",
     "users"
-]
+];
 
-// Export our request handler
+// Export request handler
 export default {
     async fetch(request) {
         const url = new URL(request.url);
         const path = url.pathname.split(/\//);
+
+        // Check if this is a preflight request (OPTIONS method)
+        if (request.method === 'OPTIONS') {
+            return new Response(null, {
+                status: 204,  // HTTP 204: No Content
+                headers: {
+                    'Access-Control-Allow-Origin': 'https://www.roblox.com',
+                    'Access-Control-Allow-Credentials': 'true',
+                    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                    'Access-Control-Max-Age': '86400'  // Cache preflight for 1 day
+                }
+            });
+        }
 
         // Check for missing subdomain
         if (!path[1].trim()) {
@@ -53,7 +65,10 @@ export default {
         // Fetch the resource from the specified subdomain
         const response = await fetch(`https://${path[1]}.roblox.com/${path.slice(2).join("/")}${url.search}`, {
             method: request.method,
-            headers: request.headers["content-type"] ? { "Content-Type": request.headers["content-type"] } : {},
+            headers: {
+                "Content-Type": request.headers.get("content-type") || "application/json", // Ensure content-type is set
+                "Cookie": request.headers.get("Cookie"), // Forward cookies (optional)
+            },
             body: request.body
         });
 
@@ -61,11 +76,11 @@ export default {
         const newResponse = new Response(response.body, response);
 
         // Set CORS headers
-        newResponse.headers.set('Access-Control-Allow-Origin', 'https://www.roblox.com'); // Replace '*' with specific origins if needed
-        newResponse.headers.set('Access-Control-Allow-Credentials', true);
-        newResponse.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Add other methods if required
-        newResponse.headers.set('Access-Control-Allow-Headers', '*'); // Specify headers if needed
+        newResponse.headers.set('Access-Control-Allow-Origin', 'https://www.roblox.com');
+        newResponse.headers.set('Access-Control-Allow-Credentials', 'true');
+        newResponse.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        newResponse.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Explicit headers
 
         return newResponse;
     }
-}
+};
