@@ -79,7 +79,7 @@ export default {
         newResponse.headers.set('Access-Control-Allow-Origin', 'https://www.roblox.com');
         newResponse.headers.set('Access-Control-Allow-Credentials', 'true');
         newResponse.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-        newResponse.headers.set('Access-Control-Allow-Headers', 'Content-Type, Cookie'); // Explicit headers
+        newResponse.headers.set('Access-Control-Allow-Headers', 'Content-Type, Cookie, 1013'); // Explicit headers
 
         return newResponse;
     }
