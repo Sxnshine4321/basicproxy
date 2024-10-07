@@ -61,7 +61,8 @@ export default {
         const newResponse = new Response(response.body, response);
 
         // Set CORS headers
-        newResponse.headers.set('Access-Control-Allow-Origin', '*'); // Replace '*' with specific origins if needed
+        newResponse.headers.set('Access-Control-Allow-Origin', 'https://www.roblox.com'); // Replace '*' with specific origins if needed
+        newResponse.headers.set('Access-Control-Allow-Credentials', true);
         newResponse.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Add other methods if required
         newResponse.headers.set('Access-Control-Allow-Headers', '*'); // Specify headers if needed
 
