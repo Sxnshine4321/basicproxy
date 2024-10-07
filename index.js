@@ -46,7 +46,7 @@ export default {
                     'Access-Control-Allow-Origin': 'https://www.roblox.com',
                     'Access-Control-Allow-Credentials': 'true',
                     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-                    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                    'Access-Control-Allow-Headers': 'Content-Type, Cookie',
                     'Access-Control-Max-Age': '86400'  // Cache preflight for 1 day
                 }
             });
