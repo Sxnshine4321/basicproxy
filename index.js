@@ -2,34 +2,54 @@
 
 const domains = [
     "apis",
+    "api",
     "assetdelivery",
+    "accountsettings",
+    "auth",
     "avatar",
     "badges",
+    "billing",
     "catalog",
     "chat",
+    "clientsettingscdn",
+    "clientsettings",
     "contacts",
     "contentstore",
     "develop",
     "economy",
     "economycreatorstats",
+    "engagementpayouts",
     "followings",
     "friends",
     "games",
+    "gamejoin",
+    "gameinternationalization",
+    "gamepersistence",
     "groups",
     "groupsmoderation",
     "inventory",
     "itemconfiguration",
+    "lms",
     "locale",
+    "localizationtables",
+    "metrics",
     "notifications",
     "points",
     "presence",
+    "premiumfeatures",
     "privatemessages",
     "publish",
     "search",
+    "share",
+    "textfilter",
     "thumbnails",
+    "thumbnailsresizer",
+    "translationroles",
+    "twostepverification",
     "trades",
     "translations",
-    "users"
+    "users",
+    "voice"
 ];
 
 // Export request handler
@@ -45,7 +65,7 @@ export default {
                 headers: {
                     'Access-Control-Allow-Origin': 'https://www.roblox.com',
                     'Access-Control-Allow-Credentials': 'true',
-                    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                    'Access-Control-Allow-Methods': '*',
                     'Access-Control-Allow-Headers': 'Content-Type, Cookie',
                     'Access-Control-Max-Age': '86400'  // Cache preflight for 1 day
                 }
@@ -78,7 +98,7 @@ export default {
         // Set CORS headers
         newResponse.headers.set('Access-Control-Allow-Origin', 'https://www.roblox.com');
         newResponse.headers.set('Access-Control-Allow-Credentials', 'true');
-        newResponse.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        newResponse.headers.set('Access-Control-Allow-Methods', '*'); // GET, POST, OPTIONS
         newResponse.headers.set('Access-Control-Allow-Headers', 'Content-Type, Cookie, 1013'); // Explicit headers
 
         return newResponse;
