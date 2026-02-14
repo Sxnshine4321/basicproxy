@@ -85,10 +85,7 @@ export default {
         // Fetch the resource from the specified subdomain
         const response = await fetch(`https://${path[1]}.roblox.com/${path.slice(2).join("/")}${url.search}`, {
             method: request.method,
-            headers: {
-                "Content-Type": request.headers.get("content-type") || "application/json", // Ensure content-type is set
-                "Cookie": request.headers.get("Cookie"), // Forward cookies (optional)
-            },
+            headers: request.headers,
             body: request.body
         });
 
